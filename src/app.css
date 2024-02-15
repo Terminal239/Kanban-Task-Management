@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+}
+
+@layer components {
+  .error-message {
+    @apply text-red-400 font-bold absolute right-0 top-0 text-sm;
+  }
+
+  .error-input {
+    @apply !border-red-400;
+  }
+
+  .select-element {
+    @apply rounded border border-lightGray p-2 text-text dark:border-[#495057] dark:bg-magenta-700 dark:text-white md:p-3;
+  }
+
+  .element-label {
+    @apply text-sm font-bold;
+  }
+
+  .button-ellipsis {
+    @apply flex items-center justify-center rounded p-2 md:p-4 hover:bg-gray-400/25;
+  }
+
+  .input-element {
+    @apply rounded border border-lightGray p-2  dark:border-[#495057] dark:bg-magenta-700 md:px-4;
+  }
+
+  .modal-scroll-container {
+    @apply flex max-h-[256px] flex-col gap-2 overflow-y-auto p-2;
+  }
+
+  .modal-inner-container {
+    @apply relative flex flex-col gap-2;
+  }
+
+  .header {
+    @apply z-20 flex h-[60px] w-full items-center gap-4 border-b border-lightGray bg-white px-4 py-2 dark:border-[#495057] dark:bg-magenta-700 md:h-[76px] md:py-0 md:pl-0 md:pr-8;
+  }
+
+  .dialog-box {
+    @apply absolute -bottom-32 right-0 flex w-max flex-col items-start gap-4 rounded bg-white py-4 text-sm shadow dark:bg-magenta-700;
+  }
+
+  .logo-container {
+    @apply border-lightGray dark:border-[#495057] dark:bg-magenta-700 md:w-[256px] md:border-r md:py-6 md:pl-6;
+  }
+
+  .btn-create-column {
+    @apply flex min-h-full min-w-[156px] cursor-pointer items-center justify-center rounded-lg border-4 border-dashed bg-white text-base font-bold text-lightGray hover:!border-magenta-400 hover:!text-magenta-400 dark:border-[#495057] dark:bg-magenta-700 dark:text-text md:min-w-[256px] md:text-2xl;
+  }
+
+  .task-container {
+    @apply flex cursor-pointer flex-col gap-1 rounded-lg bg-white px-4 py-6 text-text shadow dark:bg-magenta-700;
+  }
+}
+
+@layer utilities {
+}
