@@ -21,7 +21,9 @@ function App() {
 
   useEffect(() => {
     let theme = "";
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    if (localStorage.getItem("theme")) {
+      theme = localStorage.getItem("theme")!;
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       theme = "dark";
     } else {
       theme = "light";
