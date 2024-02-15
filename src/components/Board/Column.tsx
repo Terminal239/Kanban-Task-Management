@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import Task from "./Task";
-import { editTask, deleleTask, createTask, saveToLocalStorage } from "../../redux/slices/boardSlice";
+import { deleleTask, createTask, saveToLocalStorage } from "../../redux/slices/boardSlice";
 import { useDispatch } from "react-redux";
 
 interface Props {
@@ -11,7 +11,8 @@ const Column = ({ column }: Props) => {
   const { id, name, tasks, color } = column;
   const dispatch = useDispatch();
 
-  const [{ isOver }, drop] = useDrop(() => ({
+  // eslint-disable-next-line no-empty-pattern
+  const [{}, drop] = useDrop(() => ({
     accept: "Task",
     drop: (item: { task: Task; columnId: number }) => {
       handleStatusChange(item.task, item.columnId);
