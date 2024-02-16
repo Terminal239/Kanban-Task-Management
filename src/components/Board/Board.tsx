@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { editBoard, saveToLocalStorage, selectBoard } from "../../redux/slices/boardSlice";
 import { generateID, generateHex } from "../../utilities";
@@ -18,12 +19,20 @@ const Board = () => {
 
   return (
     <div className="flex flex-1 grow flex-col overflow-x-auto px-4 py-6 text-[12px] md:p-6">
-      <div className="mr-4 flex grow gap-4 md:gap-6">
+      <motion.div
+        transition={{
+          ease: "easeIn",
+          duration: 0.15,
+        }}
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+        className="mr-4 flex grow gap-4 md:gap-6"
+      >
         {selectedBoard?.columns.map((column) => <Column key={column.id} column={column} />)}
         <button onClick={handleCreateColumn} className="btn-create-column">
           <span className="mb-1 mr-2 md:-ml-2">+</span> <span>New Column</span>
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 };
