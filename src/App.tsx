@@ -9,7 +9,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import NoBoardFound from "./components/Utils/NoBoardFound";
 import { icons } from "./constants";
 import "./app.css";
-import { getFromLocalStorage } from "./redux/slices/boardSlice";
+import { getFromLocalStorage } from "./redux/slice";
 
 function App() {
   const dispatch = useAppDispatch();

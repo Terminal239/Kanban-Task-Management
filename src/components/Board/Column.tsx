@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import Task from "./Task";
-import { deleleTask, createTask, saveToLocalStorage } from "../../redux/slices/boardSlice";
+import { deleleTask, createTask, saveToLocalStorage } from "../../redux/slice";
 import { useDispatch } from "react-redux";
 
 interface Props {

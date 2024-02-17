@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { editBoard, saveToLocalStorage, selectBoard } from "../../redux/slices/boardSlice";
+import { editBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import { generateID, generateHex } from "../../utilities";
 import Column from "./Column";
 

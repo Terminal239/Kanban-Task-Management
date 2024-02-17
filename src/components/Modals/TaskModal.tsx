@@ -5,7 +5,7 @@ import Button from "../Reusable/Button";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { generateID } from "../../utilities";
 import { icons } from "../../constants";
-import { createTask, deleleTask, editTask, saveToLocalStorage } from "../../redux/slices/boardSlice";
+import { createTask, deleleTask, editTask, saveToLocalStorage } from "../../redux/slice";
 
 interface Props {
   selectedColumn?: number;

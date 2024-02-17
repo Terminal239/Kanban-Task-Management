@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { createBoard, editBoard, saveToLocalStorage, selectBoard } from "../../redux/slices/boardSlice";
+import { createBoard, editBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import { generateHex, generateID } from "../../utilities";
 import Button from "../Reusable/Button";
 import ModalWrapper from "../Utils/ModalWrapper";

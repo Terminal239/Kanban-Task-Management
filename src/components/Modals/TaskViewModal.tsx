@@ -4,7 +4,7 @@ import Button from "../Reusable/Button";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { icons } from "../../constants";
 import { useState } from "react";
-import { createTask, deleleTask, editTask, saveToLocalStorage, toggleTaskCompletion } from "../../redux/slices/boardSlice";
+import { createTask, deleleTask, editTask, saveToLocalStorage, toggleTaskCompletion } from "../../redux/slice";
 import { createPortal } from "react-dom";
 import TaskModal from "./TaskModal";
 import DeleteModal from "./DeleteModal";

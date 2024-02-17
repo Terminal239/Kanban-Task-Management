@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import CreateNewBoardModal from "../Modals/BoardModal";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { icons } from "../../constants";
-import { selectBoard } from "../../redux/slices/boardSlice";
+import { selectBoard } from "../../redux/slice";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 interface Props {

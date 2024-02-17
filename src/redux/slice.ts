@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { RootState } from "./store";
 // import { generateHex } from "../../utilities";
 
 // const generateSubTasks = (count: number): SubTask[] => {

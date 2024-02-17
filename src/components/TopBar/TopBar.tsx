@@ -7,7 +7,7 @@ import Button from "../Reusable/Button";
 
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slices/boardSlice";
+import { deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import DeleteModal from "../Modals/DeleteModal";
 import { createPortal } from "react-dom";
 
