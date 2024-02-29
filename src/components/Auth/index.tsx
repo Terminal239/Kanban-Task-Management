@@ -30,16 +30,6 @@ export const Auth = () => {
     displayName: "",
   });
 
-  function extractErrorMessage(errorMsg) {
-    const startIndex = errorMsg.indexOf("(");
-    const endIndex = errorMsg.indexOf(")");
-    if (startIndex !== -1 && endIndex !== -1) {
-      return errorMsg.substring(startIndex + 1, endIndex);
-    } else {
-      return "No error message found between parentheses";
-    }
-  }
-
   const validateDisplayName = (displayName: string) => {
     if (!displayName) {
       return "Display name is required";
