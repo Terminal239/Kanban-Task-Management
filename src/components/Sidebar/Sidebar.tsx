@@ -1,26 +1,52 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-
 import CreateNewBoardModal from "../Modals/BoardModal";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { icons } from "../../constants";
-import { selectBoard } from "../../redux/slice";
+import { selectBoard, setUser } from "../../redux/slice";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { getAuth, deleteUser } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import CircularProgress from "../Reusable/CircularProgress";
+import { DocumentData } from "firebase/firestore";
 
 interface Props {
+  profile: DocumentData | undefined;
   setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   handleThemeSwitch: () => void;
 }
 
-const Sidebar = ({ setShowSidebar, handleThemeSwitch }: Props) => {
-  const { width } = useWindowSize();
-  const state = useAppSelector((state) => state.board.boards);
+const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { width } = useWindowSize();
+  const { boards: state } = useAppSelector((state) => state.board);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false);
 
   const handleBoardSelect = (id: number) => {
     dispatch(selectBoard(id));
+  };
+
+  const handleOnClickDeleteAccount = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    setIsDeleting(true);
+    deleteUser(user!)
+      .then(() => {
+        navigate("/");
+        setIsDeleting(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleLogout = () => {
+    dispatch(setUser(""));
+    navigate("/");
   };
 
   return (
@@ -65,6 +91,27 @@ const Sidebar = ({ setShowSidebar, handleThemeSwitch }: Props) => {
             <img src={icons.hideSidebar} className="mt-1" alt="icon of an crossed out eye" /> Hide Sidebar
           </button>
         )}
+
+        <div className="relative -mx-6 -my-4 flex items-center gap-4 p-6 dark:border-[#495057] dark:text-magenta-200 md:border-t md:p-4">
+          <div className="flex size-8 items-center justify-center rounded-full bg-magenta-400 text-lg font-bold text-magenta-200  dark:bg-magenta-200 dark:text-magenta-900">
+            {profile?.displayName[0].toUpperCase()}
+          </div>
+          <p className="font-bold leading-none">{profile?.displayName}</p>
+          <button onClick={() => setDialogVisible((prev) => !prev)} className="button-ellipsis ml-auto">
+            <img src={icons.verticalEllipsis} alt="ellipsis" />
+          </button>
+          {dialogVisible && (
+            <div className="absolute left-0 top-24 flex w-full flex-col overflow-hidden rounded-lg border-lightGray bg-white shadow-xl dark:border-[#495057] dark:bg-magenta-700 md:-top-28 md:border">
+              <button onClick={handleLogout} className="flex items-center gap-4 p-4 text-left text-text transition hover:bg-lightGray hover:text-magenta-400 dark:hover:bg-white">
+                <i className="fa-solid fa-right-from-bracket"></i> Log out
+              </button>
+              <button onClick={handleOnClickDeleteAccount} className="flex items-center gap-4 p-4 text-left text-red-400 transition hover:bg-red-400 hover:text-magenta-700">
+                <i className="fa-solid fa-trash"></i> Delete account
+                {isDeleting && <CircularProgress classes="ml-auto" />}
+              </button>
+            </div>
+          )}
+        </div>
       </aside>
       {showModal && createPortal(<CreateNewBoardModal setShowModal={setShowModal} />, document.body)}
     </>

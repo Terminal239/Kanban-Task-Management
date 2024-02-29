@@ -6,15 +6,16 @@ interface Props {
   additionalClasses?: string;
   inForm?: boolean;
   handleClick?: () => void;
+  disabled?: boolean;
 }
 
-const Button = ({ children, type, additionalClasses, inForm, handleClick }: Props) => {
-  const baseClasses = `transition-all rounded-full text-center leading-none px-4 py-2 md:px-6 md:py-[12px] font-bold ${additionalClasses}`;
+const Button = ({ children, type, additionalClasses, disabled, inForm, handleClick }: Props) => {
+  const baseClasses = `transition-all rounded-full text-center leading-none px-4 py-2 md:px-6 md:py-[12px] font-bold ${additionalClasses} ${disabled ? "pointer-events-none !bg-gray-600" : ""}`;
 
   switch (type) {
     case "primary":
       return (
-        <button type={inForm ? "submit" : "button"} onClick={handleClick} className={`${baseClasses} bg-magenta-400 text-white hover:bg-magenta-200 hover:text-magenta-400`}>
+        <button type={inForm ? "submit" : "button"} onClick={handleClick} className={`${baseClasses} bg-magenta-400  text-white hover:bg-magenta-200 hover:text-magenta-400`}>
           {children}
         </button>
       );

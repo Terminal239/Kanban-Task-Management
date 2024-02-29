@@ -18,16 +18,17 @@ interface Props {
 }
 
 const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
-  const { boards, selectedBoard } = useAppSelector((state) => state.board);
-  const { id, name }: Board = selectedBoard!;
-
   const dispatch = useAppDispatch();
-
+  const { boards, selectedBoard } = useAppSelector((state) => state.board);
   const { width } = useWindowSize();
   const [showDialog, setShowDialog] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCreatingTask, setIsCreatingTask] = useState(false);
+
+  if (!selectedBoard) return;
+
+  const { id, name }: Board = selectedBoard!;
 
   const handleEditClick = () => {
     setIsEditing(true);

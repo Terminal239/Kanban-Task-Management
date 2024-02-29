@@ -1,64 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-// import { generateHex } from "../../utilities";
-
-// const generateSubTasks = (count: number): SubTask[] => {
-//   const subTasks: SubTask[] = [];
-//   for (let i = 1; i <= count; i++) {
-//     subTasks.push({
-//       id: i,
-//       name: `SubTask ${i}`,
-//       completed: Math.random() < 0.5,
-//     });
-//   }
-//   return subTasks;
-// };
-
-// const generateTasks = (count: number, columnId: number): Task[] => {
-//   const tasks: Task[] = [];
-//   for (let i = 1; i <= count; i++) {
-//     tasks.push({
-//       id: i,
-//       status: columnId,
-//       name: `Task ${i}`,
-//       description: `Description for Task ${i}`,
-//       subTasks: generateSubTasks(Math.floor(Math.random() * 16) + 1),
-//     });
-//   }
-//   return tasks;
-// };
-
-// const generateColumns = (count: number): Column[] => {
-//   const columns: Column[] = [];
-//   for (let i = 1; i <= count; i++) {
-//     columns.push({
-//       id: i,
-//       color: generateHex(),
-//       name: `Column ${i}`,
-//       tasks: generateTasks(Math.floor(Math.random() * 15) + 1, i),
-//     });
-//   }
-//   return columns;
-// };
-
-// const generateBoards = (count: number): Board[] => {
-//   const boards: Board[] = [];
-//   for (let i = 1; i <= count; i++) {
-//     boards.push({
-//       id: i,
-//       name: `Board ${i}`,
-//       columns: generateColumns(8),
-//     });
-//   }
-//   return boards;
-// };
-
+import { getBoardData } from "./thunk";
 interface BoardState {
   boards: Board[];
   selectedBoard: Board | null;
+  uid: string | null;
+  status: string;
 }
 
-const DUMMY_DATA: Board[] = [
+export const DUMMY_DATA: Board[] = [
   {
     id: 1,
     name: "Project X",
@@ -122,6 +72,8 @@ const DUMMY_DATA: Board[] = [
 const initialState: BoardState = {
   boards: [],
   selectedBoard: null,
+  uid: null,
+  status: "",
 };
 
 const boardSlice = createSlice({
@@ -185,23 +137,30 @@ const boardSlice = createSlice({
     saveToLocalStorage: (state) => {
       localStorage.setItem("data", JSON.stringify(state.boards));
     },
-    getFromLocalStorage: (state) => {
-      const data = localStorage.getItem("data");
-      if (!data) {
-        state.boards = DUMMY_DATA;
-        state.selectedBoard = DUMMY_DATA[0];
-        localStorage.setItem("data", JSON.stringify(state.boards));
-        return;
-      }
-
-      const boards: Board[] = JSON.parse(data);
-      state.boards = boards;
-      state.selectedBoard = boards[0];
+    initialize: (state, action) => {
+      state.boards = action.payload;
+      state.selectedBoard = action.payload[0];
     },
+    setUser: (state, action: PayloadAction<string>) => {
+      state.uid = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getBoardData.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getBoardData.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        console.log(action);
+      })
+      .addCase(getBoardData.rejected, (state) => {
+        state.status = "rejected";
+      });
   },
 });
 
-export const { createBoard, selectBoard, editBoard, deleteBoard, createTask, editTask, deleleTask, toggleTaskCompletion, getFromLocalStorage, saveToLocalStorage } =
+export const { createBoard, selectBoard, editBoard, deleteBoard, createTask, editTask, deleleTask, toggleTaskCompletion, initialize, saveToLocalStorage, setUser } =
   boardSlice.actions;
 export const selectCount = (state: RootState) => state.board.boards;
 export default boardSlice.reducer;
