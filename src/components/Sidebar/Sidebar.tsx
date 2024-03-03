@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import CreateNewBoardModal from "../Modals/BoardModal";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { icons } from "../../constants";
@@ -9,6 +8,8 @@ import { getAuth, deleteUser } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "../Reusable/CircularProgress";
 import { DocumentData } from "firebase/firestore";
+import ModalAnimate from "../Modals/ModalAnimate";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   profile: DocumentData | undefined;
@@ -51,7 +52,13 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
 
   return (
     <>
-      <aside className="absolute left-[50%] flex w-[85%] translate-x-[-50%] translate-y-4 flex-col rounded-lg border-r-lightGray bg-white px-6 py-4 shadow-lg dark:border-[#495057] dark:bg-magenta-700 md:static md:basis-[256px] md:translate-x-0 md:translate-y-0 md:rounded-none md:border-r md:shadow-none">
+      <motion.aside
+        initial={{ x: "-100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={{ bounce: 0 }}
+        className="absolute left-[50%] flex w-[85%] translate-x-[-50%] translate-y-4 flex-col rounded-lg border-r-lightGray bg-white px-6 py-4 shadow-lg dark:border-[#495057] dark:bg-magenta-700 md:static md:basis-[256px] md:translate-x-0 md:translate-y-0 md:rounded-none md:border-r md:shadow-none"
+      >
         <p className="mb-4 text-[12px] font-bold uppercase tracking-[4px] text-text">All boards ({state.length})</p>
         <div className="flex max-h-[320px] flex-col gap-2 overflow-x-auto md:-ml-6 md:mb-8 md:max-h-full">
           {state.map(({ id, name }) => (
@@ -100,20 +107,28 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
           <button onClick={() => setDialogVisible((prev) => !prev)} className="button-ellipsis ml-auto">
             <img src={icons.verticalEllipsis} alt="ellipsis" />
           </button>
-          {dialogVisible && (
-            <div className="absolute left-0 top-24 flex w-full flex-col overflow-hidden rounded-lg border-lightGray bg-white shadow-xl dark:border-[#495057] dark:bg-magenta-700 md:-top-28 md:border">
-              <button onClick={handleLogout} className="flex items-center gap-4 p-4 text-left text-text transition hover:bg-lightGray hover:text-magenta-400 dark:hover:bg-white">
-                <i className="fa-solid fa-right-from-bracket"></i> Log out
-              </button>
-              <button onClick={handleOnClickDeleteAccount} className="flex items-center gap-4 p-4 text-left text-red-400 transition hover:bg-red-400 hover:text-magenta-700">
-                <i className="fa-solid fa-trash"></i> Delete account
-                {isDeleting && <CircularProgress classes="ml-auto" />}
-              </button>
-            </div>
-          )}
+          <AnimatePresence>
+            {dialogVisible && (
+              <motion.div
+                initial={{ opacity: 0, y: "-15%" }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: "-15%" }}
+                transition={{ bounce: 0, duration: 0.1 }}
+                className="absolute inset-x-4 top-16 flex flex-col overflow-hidden rounded-lg border-lightGray bg-white shadow-xl dark:border-[#495057] dark:bg-magenta-700 md:-top-28 md:border"
+              >
+                <button onClick={handleLogout} className="flex items-center gap-4 p-4 text-left text-text transition hover:bg-lightGray hover:text-magenta-400 dark:hover:bg-white">
+                  <i className="fa-solid fa-right-from-bracket"></i> Log out
+                </button>
+                <button onClick={handleOnClickDeleteAccount} className="flex items-center gap-4 p-4 text-left text-red-400 transition hover:bg-red-400 hover:text-magenta-700">
+                  <i className="fa-solid fa-trash"></i> Delete account
+                  {isDeleting && <CircularProgress classes="ml-auto" />}
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </aside>
-      {showModal && createPortal(<CreateNewBoardModal setShowModal={setShowModal} />, document.body)}
+      </motion.aside>
+      <ModalAnimate showModal={showModal} Component={<CreateNewBoardModal setShowModal={setShowModal} />} />
     </>
   );
 };

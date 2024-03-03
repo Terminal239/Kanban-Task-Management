@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { editBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import { generateID, generateHex } from "../../utilities";
@@ -19,20 +19,12 @@ const Board = () => {
 
   return (
     <div className="flex flex-1 grow flex-col overflow-x-auto px-4 py-6 text-[12px] md:p-6">
-      <motion.div
-        transition={{
-          ease: "easeIn",
-          duration: 0.15,
-        }}
-        animate={{ opacity: 1 }}
-        initial={{ opacity: 0 }}
-        className="mr-4 flex grow gap-4 md:gap-6"
-      >
-        {selectedBoard?.columns.map((column) => <Column key={column.id} column={column} />)}
+      <div className="mr-4 flex grow gap-4 md:gap-6">
+        <AnimatePresence>{selectedBoard?.columns.map((column, index) => <Column index={index} key={column.id} column={column} />)}</AnimatePresence>
         <button onClick={handleCreateColumn} className="btn-create-column">
           <span className="mb-1 mr-2 md:-ml-2">+</span> <span>New Column</span>
         </button>
-      </motion.div>
+      </div>
     </div>
   );
 };

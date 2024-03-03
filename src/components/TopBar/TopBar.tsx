@@ -9,7 +9,8 @@ import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import DeleteModal from "../Modals/DeleteModal";
-import { createPortal } from "react-dom";
+import ModalAnimate from "../Modals/ModalAnimate";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   theme: string;
@@ -79,22 +80,30 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
             <button onClick={() => setShowDialog((prev) => !prev)} className="button-ellipsis">
               <img src={icons.verticalEllipsis} alt="vertical ellipsis" className="object-contain" />
             </button>
-            {showDialog && (
-              <div className="dialog-box">
-                <Button handleClick={handleEditClick} type="text" additionalClasses={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
-                  Edit Board
-                </Button>
-                <Button handleClick={handleDelete} type="text" additionalClasses={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
-                  Delete Board
-                </Button>
-              </div>
-            )}
+            <AnimatePresence>
+              {showDialog && (
+                <motion.div
+                  initial={{ opacity: 0, y: "15%" }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: "15%" }}
+                  transition={{ bounce: 0, duration: 0.1 }}
+                  className="dialog-box"
+                >
+                  <Button handleClick={handleEditClick} type="text" additionalClasses={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
+                    Edit Board
+                  </Button>
+                  <Button handleClick={handleDelete} type="text" additionalClasses={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
+                    Delete Board
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
-      {isEditing && createPortal(<BoardModal setShowModal={setIsEditing} selectedId={id} />, document.body)}
-      {isCreatingTask && createPortal(<TaskModal setShowModal={setIsCreatingTask} />, document.body)}
-      {isDeleting && createPortal(<DeleteModal setShowModal={setIsDeleting} element="board" handleDelete={handleBoardDelete} name={name} />, document.body)}
+      <ModalAnimate showModal={isEditing} Component={<BoardModal setShowModal={setIsEditing} selectedId={id} />} />
+      <ModalAnimate showModal={isCreatingTask} Component={<TaskModal setShowModal={setIsCreatingTask} />} />
+      <ModalAnimate showModal={isDeleting} Component={<DeleteModal setShowModal={setIsDeleting} element="board" handleDelete={handleBoardDelete} name={name} />} />
     </header>
   );
 };

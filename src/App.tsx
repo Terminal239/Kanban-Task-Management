@@ -14,6 +14,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import { icons } from "./constants";
 import CircularProgress from "./components/Reusable/CircularProgress";
 import "./app.css";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const navigate = useNavigate();
@@ -62,10 +63,13 @@ function App() {
   useEffect(() => {
     if (loading) return;
     if (uid === null) navigate("/");
-    if (data) dispatch(initialize(data.board));
+    if (data) {
+      dispatch(initialize(data.boards));
+    }
   }, [loading]);
 
   useEffect(() => {
+    console.log("saving");
     if (!loading && boards && uid) saveBoard();
   }, [boards]);
 
@@ -100,7 +104,7 @@ function App() {
       <TopBar theme={theme} showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <AppWrapper>
         {width! < 768 && showSidebar && <div onClick={() => setShowSidebar(false)} className="absolute size-full bg-black/20"></div>}
-        {showSidebar && <Sidebar profile={profile} setShowSidebar={setShowSidebar} handleThemeSwitch={handleThemeSwitch} />}
+        <AnimatePresence>{showSidebar && <Sidebar profile={profile} setShowSidebar={setShowSidebar} handleThemeSwitch={handleThemeSwitch} />}</AnimatePresence>
         {!showSidebar && width! >= 768 && (
           <button onClick={() => setShowSidebar(true)} className="absolute bottom-10 rounded-r-full bg-magenta-400 p-4">
             <img src={icons.showSidebar} className="w-6" alt="icon of an open eye" />

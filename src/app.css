@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    transition:
+      background 200ms ease-out,
+      color 200ms ease-out,
+      border 200ms ease-out;
+  }
 }
 
 @layer components {
@@ -31,7 +37,7 @@
   }
 
   .modal-scroll-container {
-    @apply flex max-h-[256px] flex-col gap-2 overflow-y-auto pr-2;
+    @apply flex max-h-[256px] flex-col gap-2 overflow-y-auto px-2 py-2;
   }
 
   .modal-inner-container {
@@ -43,7 +49,7 @@
   }
 
   .dialog-box {
-    @apply absolute -bottom-32 right-0 flex w-max flex-col items-start gap-4 rounded bg-white py-4 text-sm shadow dark:bg-magenta-700;
+    @apply absolute -bottom-32 right-0 flex w-max flex-col items-start gap-4 rounded bg-white py-4 text-sm shadow dark:bg-magenta-700  border-lightGray dark:border-[#495057] md:border;
   }
 
   .logo-container {

@@ -112,7 +112,7 @@ export const Auth = () => {
         await createUserWithEmailAndPassword(authentication, email, password);
         const board = doc(db, `${authentication.currentUser!.uid}/board`);
         const profile = doc(db, `${authentication.currentUser!.uid}/profile`);
-        await setDoc(board, { board: DUMMY_DATA });
+        await setDoc(board, { boards: DUMMY_DATA });
         await setDoc(profile, { displayName: displayName });
       } else {
         const error = validate("email", credentials.email) || validate("password", credentials.password);

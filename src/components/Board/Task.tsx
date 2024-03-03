@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TaskViewModal from "../Modals/TaskViewModal";
-import { createPortal } from "react-dom";
 import { useDrag } from "react-dnd";
+import ModalAnimate from "../Modals/ModalAnimate";
 
 interface Props {
   task: Task;
@@ -32,7 +32,7 @@ const Task = ({ task, columnId }: Props) => {
           </p>
         </article>
       </div>
-      {showTaskModal && createPortal(<TaskViewModal selectedColumn={columnId} setShowModal={setShowTaskModal} selectedTask={id} />, document.body)}
+      <ModalAnimate showModal={showTaskModal} Component={<TaskViewModal selectedColumn={columnId} setShowModal={setShowTaskModal} selectedTask={id} />} />
     </>
   );
 };
