@@ -53,11 +53,11 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
   return (
     <>
       <motion.aside
-        initial={{ x: "-100%" }}
-        animate={{ x: 0 }}
-        exit={{ x: "-100%" }}
+        initial={{ x: "-250%", y: width! < 768 ? "16px" : 0 }}
+        animate={{ x: width! < 768 ? "-50%" : 0, y: width! < 768 ? "16px" : 0 }}
+        exit={{ x: "-250%" }}
         transition={{ bounce: 0 }}
-        className="absolute left-[50%] flex w-[85%] translate-x-[-50%] translate-y-4 flex-col rounded-lg border-r-lightGray bg-white px-6 py-4 shadow-lg dark:border-[#495057] dark:bg-magenta-700 md:static md:basis-[256px] md:translate-x-0 md:translate-y-0 md:rounded-none md:border-r md:shadow-none"
+        className="absolute left-[50%] z-50 flex w-[85%] translate-x-[-50%] translate-y-4 flex-col rounded-lg border-r-lightGray bg-white px-6 py-4 shadow-lg dark:border-[#495057] dark:bg-magenta-700 md:static md:basis-[256px] md:translate-x-0 md:translate-y-0 md:rounded-none md:border-r md:shadow-none"
       >
         <p className="mb-4 text-[12px] font-bold uppercase tracking-[4px] text-text">All boards ({state.length})</p>
         <div className="flex max-h-[320px] flex-col gap-2 overflow-x-auto md:-ml-6 md:mb-8 md:max-h-full">
@@ -110,9 +110,9 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
           <AnimatePresence>
             {dialogVisible && (
               <motion.div
-                initial={{ opacity: 0, y: "-15%" }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: "-15%" }}
+                initial={{ opacity: 0, y: width! < 768 ? "35%" : "-25%" }}
+                animate={{ opacity: 1, y: width! < 768 ? "32px" : "-15%" }}
+                exit={{ opacity: 0, y: width! < 768 ? "35%" : "-25%" }}
                 transition={{ bounce: 0, duration: 0.1 }}
                 className="absolute inset-x-4 top-16 flex flex-col overflow-hidden rounded-lg border-lightGray bg-white shadow-xl dark:border-[#495057] dark:bg-magenta-700 md:-top-28 md:border"
               >

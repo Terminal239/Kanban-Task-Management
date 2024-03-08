@@ -103,7 +103,7 @@ function App() {
     <>
       <TopBar theme={theme} showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <AppWrapper>
-        {width! < 768 && showSidebar && <div onClick={() => setShowSidebar(false)} className="absolute size-full bg-black/20"></div>}
+        {width! < 768 && showSidebar && <div onClick={() => setShowSidebar(false)} className="absolute z-40 size-full bg-black/20"></div>}
         <AnimatePresence>{showSidebar && <Sidebar profile={profile} setShowSidebar={setShowSidebar} handleThemeSwitch={handleThemeSwitch} />}</AnimatePresence>
         {!showSidebar && width! >= 768 && (
           <button onClick={() => setShowSidebar(true)} className="absolute bottom-10 rounded-r-full bg-magenta-400 p-4">
