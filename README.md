@@ -1,8 +1,8 @@
-# Kanban Task Management Application
+# Kanban Task Management Application with User Authentication
 
 This is a Kanban task management application developed to help users organize their projects and tasks efficiently. Below, you'll find information about the tools used for implementation and the features of the application.
 
-![](./screenshot.png)
+![Screenshot](./screenshot.png)
 
 ## Tools Used
 
@@ -13,6 +13,10 @@ This is a Kanban task management application developed to help users organize th
 - **React Redux**: Integrated for connecting React components with the Redux store.
 - **@uidotdev/usehooks**: A library for custom React hooks, enhancing code reusability and readability.
 - **Tailwind CSS**: Utilized for styling components, providing utility-first CSS.
+
+### Authentication and Database
+
+- **Firebase**: Integrated for user authentication and account management, providing secure user authentication and real-time database functionalities.
 
 ### Development and Build Tools
 
@@ -38,6 +42,12 @@ This is a Kanban task management application developed to help users organize th
 
 - **Project Creation**: Create new projects to group related tasks together.
 - **Project Selection**: Switch between different projects to manage tasks separately.
+
+### User Authentication
+
+- **Sign Up and Sign In**: Users can create accounts and sign in securely.
+- **Authentication State**: Manage user authentication state in real-time.
+- **Authorization**: Restrict access to certain features based on user authentication status.
 
 ### User Interface
 
