@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../hooks";
 import { DUMMY_DATA, setUser } from "../../redux/slice";
 import CircularProgress from "../Reusable/CircularProgress";
 import { FirebaseError } from "firebase/app";
+import { icons } from "../../constants";
 
 export const Auth = () => {
   const navigate = useNavigate();
@@ -98,11 +99,7 @@ export const Auth = () => {
     setIsLoading(true);
     try {
       if (isSignUp) {
-        const error =
-          validate("displayName", credentials.displayName) ||
-          validate("email", credentials.email) ||
-          validate("password", credentials.password) ||
-          validate("confirmPassword", credentials.confirmPassword);
+        const error = validate("displayName", credentials.displayName) || validate("email", credentials.email) || validate("password", credentials.password) || validate("confirmPassword", credentials.confirmPassword);
         if (error) {
           setIsLoading(false);
           return;
@@ -156,7 +153,8 @@ export const Auth = () => {
   };
 
   return (
-    <div className="flex size-full items-center justify-center bg-magenta-800 p-4">
+    <div className="flex flex-col size-full items-center justify-center bg-magenta-800 p-4 gap-6">
+      <img src={icons.logoLight} alt="logo of the application" className="object-contain h-8 lg:h-10" />
       <div className="flex w-full max-w-[500px] flex-col gap-4 rounded-lg bg-magenta-700 p-6 md:gap-6 md:p-8">
         {isSignUp ? <SignUp errors={errors} credentials={credentials} onChange={onChange} /> : <Login error={error} credentials={credentials} onChange={onChange} />}
         {error && <span className="text-red-500">{error}</span>}
