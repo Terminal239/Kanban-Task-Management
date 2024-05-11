@@ -46,11 +46,11 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
     const selected = filtered[0];
     dispatch(deleteBoard(id));
 
+    setShowDialog(false);
     if (!selected) dispatch(createBoard(DUMMY_DATA[0]));
     else dispatch(selectBoard(selected.id));
 
     dispatch(saveToLocalStorage());
-    setShowDialog(false);
   };
 
   const handleAddNewTask = () => {
