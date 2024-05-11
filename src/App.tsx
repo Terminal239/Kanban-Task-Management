@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { useAppDispatch, useAppSelector } from "./hooks";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { db } from "../firebase/config";
 import { doc, updateDoc } from "firebase/firestore";
-import { initialize } from "./redux/slice";
+import { useEffect, useState } from "react";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase/config";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { initialize } from "./redux/slice";
 
+import { AnimatePresence } from "framer-motion";
+import "./app.css";
+import Board from "./components/Board/Board";
+import CircularProgress from "./components/Reusable/CircularProgress";
+import Sidebar from "./components/Sidebar/Sidebar";
 import TopBar from "./components/TopBar/TopBar";
 import AppWrapper from "./components/Utils/AppWrapper";
-import Board from "./components/Board/Board";
-import Sidebar from "./components/Sidebar/Sidebar";
 import { icons } from "./constants";
-import CircularProgress from "./components/Reusable/CircularProgress";
-import "./app.css";
-import { AnimatePresence } from "framer-motion";
+import NoBoardFound from "./components/Utils/NoBoardFound";
 
 function App() {
   const navigate = useNavigate();
@@ -98,6 +99,8 @@ function App() {
       return theme;
     });
   };
+
+  if (boards.length === 0) return <NoBoardFound />;
 
   return (
     <>

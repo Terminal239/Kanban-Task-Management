@@ -8,7 +8,7 @@ import Button from "../Reusable/Button";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { DUMMY_DATA, createBoard, deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
+import { deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import DeleteModal from "../Modals/DeleteModal";
 import ModalAnimate from "../Modals/ModalAnimate";
 
@@ -46,11 +46,11 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
     const selected = filtered[0];
     dispatch(deleteBoard(id));
 
-    setShowDialog(false);
-    if (!selected) dispatch(createBoard(DUMMY_DATA[0]));
+    if (!selected) dispatch(selectBoard(null));
     else dispatch(selectBoard(selected.id));
 
     dispatch(saveToLocalStorage());
+    setShowDialog(false);
   };
 
   const handleAddNewTask = () => {
