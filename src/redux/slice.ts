@@ -82,6 +82,7 @@ const boardSlice = createSlice({
   reducers: {
     createBoard: (state, action: PayloadAction<Board>) => {
       state.boards.push(action.payload);
+      state.selectedBoard = action.payload;
     },
     editBoard: (state, action: PayloadAction<Board>) => {
       const edited = action.payload;
@@ -160,7 +161,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { createBoard, selectBoard, editBoard, deleteBoard, createTask, editTask, deleleTask, toggleTaskCompletion, initialize, saveToLocalStorage, setUser } =
-  boardSlice.actions;
+export const { createBoard, selectBoard, editBoard, deleteBoard, createTask, editTask, deleleTask, toggleTaskCompletion, initialize, saveToLocalStorage, setUser } = boardSlice.actions;
 export const selectCount = (state: RootState) => state.board.boards;
 export default boardSlice.reducer;

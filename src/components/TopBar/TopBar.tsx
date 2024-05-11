@@ -1,16 +1,16 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import { useState } from "react";
 
-import TaskModal from "../Modals/TaskModal";
 import BoardModal from "../Modals/BoardModal";
+import TaskModal from "../Modals/TaskModal";
 import Button from "../Reusable/Button";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
+import { DUMMY_DATA, createBoard, deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import DeleteModal from "../Modals/DeleteModal";
 import ModalAnimate from "../Modals/ModalAnimate";
-import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   theme: string;
@@ -46,7 +46,7 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
     const selected = filtered[0];
     dispatch(deleteBoard(id));
 
-    if (!selected) dispatch(selectBoard(null));
+    if (!selected) dispatch(createBoard(DUMMY_DATA[0]));
     else dispatch(selectBoard(selected.id));
 
     dispatch(saveToLocalStorage());
@@ -82,13 +82,7 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
             </button>
             <AnimatePresence>
               {showDialog && (
-                <motion.div
-                  initial={{ opacity: 0, y: "15%" }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: "15%" }}
-                  transition={{ bounce: 0, duration: 0.1 }}
-                  className="dialog-box"
-                >
+                <motion.div initial={{ opacity: 0, y: "15%" }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: "15%" }} transition={{ bounce: 0, duration: 0.1 }} className="dialog-box">
                   <Button handleClick={handleEditClick} type="text" additionalClasses={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
                     Edit Board
                   </Button>
