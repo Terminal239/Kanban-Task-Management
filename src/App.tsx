@@ -14,8 +14,8 @@ import CircularProgress from "./components/Reusable/CircularProgress";
 import Sidebar from "./components/Sidebar/Sidebar";
 import TopBar from "./components/TopBar/TopBar";
 import AppWrapper from "./components/Utils/AppWrapper";
-import { icons } from "./constants";
 import NoBoardFound from "./components/Utils/NoBoardFound";
+import { icons } from "./constants";
 
 function App() {
   const navigate = useNavigate();
