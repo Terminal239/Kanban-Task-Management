@@ -1,13 +1,13 @@
-import ModalWrapper from "../Utils/ModalWrapper";
 import Button from "../Reusable/Button";
+import ModalWrapper from "../Utils/ModalWrapper";
 
-import { useAppSelector, useAppDispatch } from "../../hooks";
-import { icons } from "../../constants";
 import { useState } from "react";
-import { createTask, deleleTask, editTask, saveToLocalStorage, toggleTaskCompletion } from "../../redux/slice";
 import { createPortal } from "react-dom";
-import TaskModal from "./TaskModal";
+import { icons } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { createTask, deleleTask, editTask, saveToLocalStorage, toggleTaskCompletion } from "../../redux/slice";
 import DeleteModal from "./DeleteModal";
+import TaskModal from "./TaskModal";
 
 interface Props {
   selectedColumn: number;
@@ -61,7 +61,7 @@ const TaskViewModal = ({ selectedColumn, selectedTask, setShowModal }: Props): J
   };
 
   return (
-    <ModalWrapper setShowModal={setShowModal} additionalClasses="gap-0">
+    <ModalWrapper setShowModal={setShowModal} className="gap-0">
       <div className="flex items-center justify-between">
         <p className="text-xl font-bold">{name}</p>
         <div className="relative flex items-center text-text">
@@ -70,10 +70,10 @@ const TaskViewModal = ({ selectedColumn, selectedTask, setShowModal }: Props): J
           </button>
           {showDialog && (
             <div className="dialog-box">
-              <Button handleClick={handleEdit} type="text" additionalClasses={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
+              <Button handleClick={handleEdit} type="text" className={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
                 Edit Task
               </Button>
-              <Button handleClick={handleDeleteClick} type="text" additionalClasses={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
+              <Button handleClick={handleDeleteClick} type="text" className={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
                 Delete Task
               </Button>
             </div>

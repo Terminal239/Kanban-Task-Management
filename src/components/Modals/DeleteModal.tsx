@@ -10,7 +10,7 @@ interface Props {
 
 const DeleteModal = ({ name, element, handleDelete, setShowModal }: Props) => {
   return (
-    <ModalWrapper setShowModal={setShowModal} additionalClasses="flex flex-col items-center gap-6">
+    <ModalWrapper setShowModal={setShowModal} className="flex flex-col items-center gap-6">
       <p className="w-[256px] text-center text-text md:w-[296px] md:text-xl">
         Are you sure you want to delete the {element} <span className="font-bold text-white">"{name}"</span>?
       </p>

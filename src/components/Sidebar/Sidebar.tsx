@@ -1,15 +1,17 @@
-import { useState } from "react";
-import CreateNewBoardModal from "../Modals/BoardModal";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { icons } from "../../constants";
-import { selectBoard, setUser } from "../../redux/slice";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { getAuth, deleteUser } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import CircularProgress from "../Reusable/CircularProgress";
-import { DocumentData } from "firebase/firestore";
-import ModalAnimate from "../Modals/ModalAnimate";
+import { deleteUser, getAuth } from "firebase/auth";
+import { doc, DocumentData, getDoc } from "firebase/firestore";
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authentication, db } from "../../../firebase/config";
+import { icons } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { selectBoard, setUser } from "../../redux/slice";
+import CreateNewBoardModal from "../Modals/BoardModal";
+import ModalAnimate from "../Modals/ModalAnimate";
+import TwoFactorModal from "../Modals/TwoFactorModal";
+import CircularProgress from "../Reusable/CircularProgress";
 
 interface Props {
   profile: DocumentData | undefined;
@@ -26,6 +28,13 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
 
   const [showModal, setShowModal] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
+
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [twoFactor, setTwoFactor] = useState<boolean>(false);
+
+  useEffect(() => {
+    checkTwoFactorAuthentication();
+  }, []);
 
   const handleBoardSelect = (id: number) => {
     dispatch(selectBoard(id));
@@ -49,6 +58,27 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
     dispatch(setUser(""));
     navigate("/");
   };
+
+  const handleTwoFactor = () => {
+    setShowQRModal(true);
+  };
+
+  async function checkTwoFactorAuthentication() {
+    const userId = authentication.currentUser?.uid;
+    let isTwoFactorEnabled;
+    if (userId) {
+      try {
+        const userDocRef = doc(db, `${userId}/profile`);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) isTwoFactorEnabled = userDoc.data()?.isTwoFactorEnabled;
+      } catch (error) {
+        console.error("Error checking 2FA status:", error);
+      }
+    }
+
+    setTwoFactor(isTwoFactorEnabled);
+  }
 
   return (
     <>
@@ -114,8 +144,14 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
                 animate={{ opacity: 1, y: width! < 768 ? "32px" : "-15%" }}
                 exit={{ opacity: 0, y: width! < 768 ? "35%" : "-25%" }}
                 transition={{ bounce: 0, duration: 0.1 }}
-                className="absolute inset-x-4 top-16 flex flex-col overflow-hidden rounded-lg border-lightGray bg-white shadow-xl dark:border-[#495057] dark:bg-magenta-700 md:-top-28 md:border"
+                className="absolute inset-x-4 top-16 flex flex-col overflow-hidden rounded-lg border-lightGray bg-white shadow-xl dark:border-[#495057] dark:bg-magenta-700 md:-top-32 md:border"
               >
+                <button
+                  onClick={handleTwoFactor}
+                  className="flex items-center gap-4 p-4 text-left text-text transition hover:bg-lightGray hover:text-magenta-400 dark:hover:bg-white"
+                >
+                  <i className="fa-solid fa-mobile"></i> 2-Factor Auth
+                </button>
                 <button onClick={handleLogout} className="flex items-center gap-4 p-4 text-left text-text transition hover:bg-lightGray hover:text-magenta-400 dark:hover:bg-white">
                   <i className="fa-solid fa-right-from-bracket"></i> Log out
                 </button>
@@ -129,6 +165,7 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
         </div>
       </motion.aside>
       <ModalAnimate showModal={showModal} Component={<CreateNewBoardModal setShowModal={setShowModal} />} />
+      <ModalAnimate showModal={showQRModal} Component={<TwoFactorModal setTwoFactor={setTwoFactor} twoFactor={twoFactor} setShowModal={setShowQRModal} />} />
     </>
   );
 };

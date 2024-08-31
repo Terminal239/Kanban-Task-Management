@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import ModalWrapper from "../Utils/ModalWrapper";
 import Button from "../Reusable/Button";
+import ModalWrapper from "../Utils/ModalWrapper";
 
-import { useAppSelector, useAppDispatch } from "../../hooks";
-import { generateID } from "../../utilities";
 import { icons } from "../../constants";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { createTask, deleleTask, editTask, saveToLocalStorage } from "../../redux/slice";
+import { generateID } from "../../utilities";
 
 interface Props {
   selectedColumn?: number;
@@ -110,7 +110,7 @@ const TaskModal = ({ selectedColumn, selectedTask, setShowModal }: Props): JSX.E
   }, []);
 
   return (
-    <ModalWrapper setShowModal={setShowModal} additionalClasses="gap-6">
+    <ModalWrapper setShowModal={setShowModal} className="gap-6">
       <h5 className="text-xl font-bold">Add new board</h5>
       <form className="flex flex-col gap-4">
         <div className="modal-inner-container">
@@ -161,7 +161,7 @@ const TaskModal = ({ selectedColumn, selectedTask, setShowModal }: Props): JSX.E
             inForm={false}
             handleClick={handleSubTaskCreate}
             type="primary"
-            additionalClasses="capitalize !bg-magenta-200 dark:bg-white !text-magenta-400 hover:!bg-green-300 hover:!text-green-700"
+            className="capitalize !bg-magenta-200 dark:bg-white !text-magenta-400 hover:!bg-green-300 hover:!text-green-700"
           >
             <span>+</span> Add Subtask
           </Button>
@@ -185,7 +185,7 @@ const TaskModal = ({ selectedColumn, selectedTask, setShowModal }: Props): JSX.E
         </div>
       </form>
       <div className="flex flex-col gap-2">
-        <Button handleClick={handleTaskCreate} type="primary" additionalClasses="capitalize">
+        <Button handleClick={handleTaskCreate} type="primary" className="capitalize">
           {selectedTask ? "Save task" : "Create task"}
         </Button>
       </div>

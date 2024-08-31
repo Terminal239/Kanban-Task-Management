@@ -72,7 +72,7 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
           )}
         </div>
         <div className="flex items-center gap-2 md:gap-4">
-          <Button handleClick={handleAddNewTask} type="primary" additionalClasses="flex items-center gap-2">
+          <Button handleClick={handleAddNewTask} type="primary" className="flex items-center gap-2">
             <img src={icons.addTaskMobile} alt="Plus icon" className="mt-0.5 leading-none" />
             {width! >= 768 && "Add new task"}
           </Button>
@@ -82,11 +82,17 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
             </button>
             <AnimatePresence>
               {showDialog && (
-                <motion.div initial={{ opacity: 0, y: "15%" }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: "15%" }} transition={{ bounce: 0, duration: 0.1 }} className="dialog-box">
-                  <Button handleClick={handleEditClick} type="text" additionalClasses={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
+                <motion.div
+                  initial={{ opacity: 0, y: "15%" }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: "15%" }}
+                  transition={{ bounce: 0, duration: 0.1 }}
+                  className="dialog-box"
+                >
+                  <Button handleClick={handleEditClick} type="text" className={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
                     Edit Board
                   </Button>
-                  <Button handleClick={handleDelete} type="text" additionalClasses={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
+                  <Button handleClick={handleDelete} type="text" className={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
                     Delete Board
                   </Button>
                 </motion.div>

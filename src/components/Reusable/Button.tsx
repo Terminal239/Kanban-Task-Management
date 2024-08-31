@@ -3,14 +3,14 @@ import { ReactNode } from "react";
 interface Props {
   type: "primary" | "secondary" | "tertiary" | "desctructive" | "text";
   children: ReactNode;
-  additionalClasses?: string;
+  className?: string;
   inForm?: boolean;
   handleClick?: () => void;
   disabled?: boolean;
 }
 
-const Button = ({ children, type, additionalClasses, disabled, inForm, handleClick }: Props) => {
-  const baseClasses = `transition-all rounded-full text-center leading-none px-4 py-2 md:px-6 md:py-[12px] font-bold ${additionalClasses} ${disabled ? "pointer-events-none !bg-gray-600" : ""}`;
+const Button = ({ children, type, className, disabled, inForm, handleClick }: Props) => {
+  const baseClasses = `transition-all rounded-full text-center leading-none px-4 py-2 md:px-6 md:py-[12px] font-bold ${className} ${disabled ? "pointer-events-none !bg-gray-600" : ""}`;
 
   switch (type) {
     case "primary":
@@ -39,7 +39,7 @@ const Button = ({ children, type, additionalClasses, disabled, inForm, handleCli
       );
     case "text":
       return (
-        <button type={inForm ? "submit" : "button"} onClick={handleClick} className={`w-full px-6 py-1 text-left ${additionalClasses}`}>
+        <button type={inForm ? "submit" : "button"} onClick={handleClick} className={`w-full px-6 py-1 text-left ${className}`}>
           {children}
         </button>
       );

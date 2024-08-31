@@ -90,7 +90,7 @@ const BoardModal = ({ selectedId, setShowModal }: Props): JSX.Element => {
   }, []);
 
   return (
-    <ModalWrapper setShowModal={setShowModal} additionalClasses="gap-6">
+    <ModalWrapper setShowModal={setShowModal} className="gap-6">
       <h5 className="text-xl font-bold">Add new board</h5>
       <form className="flex flex-col gap-4">
         <div className="modal-inner-container">
@@ -132,14 +132,10 @@ const BoardModal = ({ selectedId, setShowModal }: Props): JSX.Element => {
         </div>
       </form>
       <div className="flex flex-col gap-2">
-        <Button
-          handleClick={handleColumnCreate}
-          type="primary"
-          additionalClasses="capitalize !bg-magenta-200 dark:bg-white !text-magenta-400 hover:!bg-green-300 hover:!text-green-700"
-        >
+        <Button handleClick={handleColumnCreate} type="primary" className="!bg-magenta-200 capitalize !text-magenta-400 hover:!bg-green-300 hover:!text-green-700 dark:bg-white">
           <span>+</span> Add new Column
         </Button>
-        <Button handleClick={handleBoardCreate} type="primary" additionalClasses="capitalize">
+        <Button handleClick={handleBoardCreate} type="primary" className="capitalize">
           {selectedId ? "Save Board" : "Create new board"}
         </Button>
       </div>
