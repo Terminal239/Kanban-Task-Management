@@ -96,7 +96,7 @@ const TwoFactorModal = ({ twoFactor, setTwoFactor, setShowModal }: Props) => {
       const userId = authentication.currentUser!.uid;
 
       if (userId) {
-        await setDoc(doc(db, `users/${userId}`), { totpSecret: null }, { merge: true });
+        await setDoc(doc(db, userId, "profile"), { totpSecret: null }, { merge: true });
 
         const userDocRef = doc(db, userId, "profile");
         await updateDoc(userDocRef, {
@@ -112,14 +112,14 @@ const TwoFactorModal = ({ twoFactor, setTwoFactor, setShowModal }: Props) => {
 
   return (
     <ModalWrapper className="!pt-8" setShowModal={setShowModal}>
-      <div className="flex flex-col items-center gap-8 text-center text-lg leading-6">
+      <div className="flex flex-col items-center gap-8 text-center leading-6 md:text-lg">
         {twoFactor ? (
           <>
             {loading ? <CircularProgress /> : <img src={qrCodeUrl} alt="TOTP QR Code" />}
             <div className="text-left">
-              <p className="text-xl font-bold">Instructions:</p>
+              <p className="text-lg font-bold md:text-xl">Instructions:</p>
               <ol className="list-inside list-decimal">
-                <li>Scan the QR code using the authenticator app.</li>
+                <li>Scan the QR code using an authenticator app.</li>
                 <li>Enter the 6-digit code from the next login.</li>
               </ol>
             </div>
