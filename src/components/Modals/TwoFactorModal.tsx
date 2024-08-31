@@ -7,6 +7,7 @@ import { authentication, db } from "../../../firebase/config";
 import Button from "../Reusable/Button";
 import CircularProgress from "../Reusable/CircularProgress";
 import ModalWrapper from "../Utils/ModalWrapper";
+import base32Encode from "base32-encode";
 
 interface Props {
   twoFactor: boolean;
@@ -32,11 +33,14 @@ const TwoFactorModal = ({ twoFactor, setTwoFactor, setShowModal }: Props) => {
     let otp;
 
     if (!profileDoc.data()?.totpSecret) {
+      const secretBuffer = new TextEncoder().encode(uuidv4().replace(/-/g, "").slice(0, 10)); // Shortened to 10 bytes
+      const secret = base32Encode(secretBuffer, "RFC4648", { padding: false });
+
       otp = new OTP({
         name: "KanbanTaskManagement",
         keySize: 128, // You can adjust this size if needed
         codeLength: 6,
-        secret: uuidv4().replace(/-/g, "").slice(0, 20), // Generate a unique 20-character secret
+        secret: secret,
       });
       await setDoc(
         profileRef,
