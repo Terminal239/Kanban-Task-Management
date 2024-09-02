@@ -1,3 +1,4 @@
+import base32Encode from "base32-encode";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import OTP from "otp";
 import QRCode from "qrcode";
@@ -7,7 +8,6 @@ import { authentication, db } from "../../../firebase/config";
 import Button from "../Reusable/Button";
 import CircularProgress from "../Reusable/CircularProgress";
 import ModalWrapper from "../Utils/ModalWrapper";
-import base32Encode from "base32-encode";
 
 interface Props {
   twoFactor: boolean;
@@ -28,7 +28,7 @@ const TwoFactorModal = ({ twoFactor, setTwoFactor, setShowModal }: Props) => {
   const generateTOTPSecret = async (userId: string) => {
     setLoading(true);
 
-    const profileRef = doc(db, `${userId}/profile`);
+    const profileRef = doc(db, "users", userId);
     const profileDoc = await getDoc(profileRef);
     let otp;
 
@@ -85,7 +85,7 @@ const TwoFactorModal = ({ twoFactor, setTwoFactor, setShowModal }: Props) => {
     const userId = authentication.currentUser!.uid;
 
     try {
-      const userDocRef = doc(db, userId, "profile");
+      const userDocRef = doc(db, "users", userId);
       await updateDoc(userDocRef, {
         isTwoFactorEnabled: true,
       });
@@ -100,9 +100,9 @@ const TwoFactorModal = ({ twoFactor, setTwoFactor, setShowModal }: Props) => {
       const userId = authentication.currentUser!.uid;
 
       if (userId) {
-        await setDoc(doc(db, userId, "profile"), { totpSecret: null }, { merge: true });
+        await setDoc(doc(db, "users", userId), { totpSecret: null }, { merge: true });
 
-        const userDocRef = doc(db, userId, "profile");
+        const userDocRef = doc(db, "users", userId);
         await updateDoc(userDocRef, {
           isTwoFactorEnabled: false,
         });

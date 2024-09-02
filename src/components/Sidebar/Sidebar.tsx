@@ -68,7 +68,7 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
     let isTwoFactorEnabled;
     if (userId) {
       try {
-        const userDocRef = doc(db, `${userId}/profile`);
+        const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
 
         if (userDoc.exists()) isTwoFactorEnabled = userDoc.data()?.isTwoFactorEnabled;

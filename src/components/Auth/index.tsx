@@ -149,10 +149,12 @@ export const Auth = () => {
         // Send verification email
         await sendEmailVerification(userCredential.user);
 
-        const board = doc(db, `${userCredential.user.uid}/board`);
-        const profile = doc(db, `${userCredential.user.uid}/profile`);
+        const userId = userCredential.user.uid;
+        const board = doc(db, `${userId}/board`);
+        const profile = doc(db, `${userId}/profile`);
         await setDoc(board, { boards: DUMMY_DATA });
         await setDoc(profile, { displayName: displayName });
+        await setDoc(doc(db, "users", userId), { totpSecret: null, isTwoFactorEnabled: false }, { merge: true });
 
         setIsVerified(false);
       } else {
@@ -230,7 +232,7 @@ export const Auth = () => {
     if (userId) {
       try {
         // Retrieve the user's profile document to check if 2FA is enabled
-        const profileRef = doc(db, userId, "profile");
+        const profileRef = doc(db, "users", userId);
         const profileDoc = await getDoc(profileRef);
 
         if (profileDoc.exists()) {
@@ -289,7 +291,7 @@ export const Auth = () => {
       return;
     }
 
-    const profileRef = doc(db, `${userId}/profile`);
+    const profileRef = doc(db, "users", userId);
     const profileDoc = await getDoc(profileRef);
 
     if (profileDoc.exists()) {
