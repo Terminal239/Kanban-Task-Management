@@ -143,6 +143,8 @@ const boardSlice = createSlice({
       state.selectedBoard = action.payload[0];
     },
     setUser: (state, action: PayloadAction<string>) => {
+      state.boards = [];
+      state.selectedBoard = null;
       state.uid = action.payload;
     },
   },
