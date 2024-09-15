@@ -1,11 +1,11 @@
 import { AnimatePresence } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { editBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
-import { generateID, generateHex } from "../../utilities";
+import { editBoard, getSelectedBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
+import { generateHex, generateID } from "../../utilities";
 import Column from "./Column";
 
 const Board = () => {
-  const selectedBoard = useAppSelector((state) => state.board.selectedBoard);
+  const selectedBoard = useAppSelector(getSelectedBoard);
   const dispatch = useAppDispatch();
 
   const handleCreateColumn = () => {

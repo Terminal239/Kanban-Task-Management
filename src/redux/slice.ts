@@ -161,6 +161,11 @@ const boardSlice = createSlice({
   },
 });
 
-export const { createBoard, selectBoard, editBoard, deleteBoard, createTask, editTask, deleleTask, toggleTaskCompletion, initialize, saveToLocalStorage, setUser } = boardSlice.actions;
-export const selectCount = (state: RootState) => state.board.boards;
+export const { createBoard, selectBoard, editBoard, deleteBoard, createTask, editTask, deleleTask, toggleTaskCompletion, initialize, saveToLocalStorage, setUser } =
+  boardSlice.actions;
+
+export const getBoards = (state: RootState) => state.boards;
+export const getSelectedBoard = (state: RootState) => state.selectedBoard;
+export const getUid = (state: RootState) => state.uid;
+
 export default boardSlice.reducer;

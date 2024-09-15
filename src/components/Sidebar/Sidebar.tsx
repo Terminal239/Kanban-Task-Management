@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { authentication, db } from "../../../firebase/config";
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { selectBoard, setUser } from "../../redux/slice";
+import { getBoards, selectBoard, setUser } from "../../redux/slice";
 import CreateNewBoardModal from "../Modals/BoardModal";
 import ModalAnimate from "../Modals/ModalAnimate";
 import TwoFactorModal from "../Modals/TwoFactorModal";
@@ -23,7 +23,7 @@ const Sidebar = ({ profile, setShowSidebar, handleThemeSwitch }: Props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { width } = useWindowSize();
-  const { boards: state } = useAppSelector((state) => state.board);
+  const state = useAppSelector(getBoards);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [showModal, setShowModal] = useState(false);

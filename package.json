@@ -30,6 +30,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.1",
+    "redux-persist": "^6.0.0",
     "rfc4648": "^1.5.3",
     "uuidv4": "^6.2.13"
   },

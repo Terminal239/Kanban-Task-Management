@@ -5,7 +5,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase/config";
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { initialize } from "./redux/slice";
+import { getBoards, getUid, initialize } from "./redux/slice";
 
 import { AnimatePresence } from "framer-motion";
 import "./app.css";
@@ -20,7 +20,9 @@ import { icons } from "./constants";
 function App() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { boards, uid } = useAppSelector((state) => state.board);
+  const boards = useAppSelector(getBoards);
+  const uid = useAppSelector(getUid);
+
   const boardRef = doc(db, `${uid}/board`);
   const [data, loading] = useDocumentData(boardRef);
 
@@ -70,7 +72,6 @@ function App() {
   }, [loading]);
 
   useEffect(() => {
-    console.log("saving");
     if (!loading && boards && uid) saveBoard();
   }, [boards]);
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { createBoard, editBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
+import { createBoard, editBoard, getBoards, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import { generateHex, generateID } from "../../utilities";
 import Button from "../Reusable/Button";
 import ModalWrapper from "../Utils/ModalWrapper";
@@ -27,7 +27,7 @@ const INITIAL_COLUMNS: Column[] = [
 ];
 
 const BoardModal = ({ selectedId, setShowModal }: Props): JSX.Element => {
-  const state = useAppSelector((state) => state.board.boards);
+  const state = useAppSelector(getBoards);
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");

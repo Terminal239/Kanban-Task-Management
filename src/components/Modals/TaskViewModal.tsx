@@ -16,7 +16,7 @@ interface Props {
 }
 
 const TaskViewModal = ({ selectedColumn, selectedTask, setShowModal }: Props): JSX.Element => {
-  const board = useAppSelector((state) => state.board.selectedBoard!);
+  const board = useAppSelector((state) => state.selectedBoard!);
   const column: Column = board.columns.find((column) => column.id === selectedColumn)!;
   const task: Task = column.tasks.find((task) => task.id === selectedTask)!;
 

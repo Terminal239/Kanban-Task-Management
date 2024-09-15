@@ -27,7 +27,7 @@ const INITIAL_SUBTASKS: SubTask[] = [
 ];
 
 const TaskModal = ({ selectedColumn, selectedTask, setShowModal }: Props): JSX.Element => {
-  const board = useAppSelector((state) => state.board.selectedBoard!);
+  const board = useAppSelector((state) => state.selectedBoard!);
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");

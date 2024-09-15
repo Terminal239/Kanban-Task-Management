@@ -8,7 +8,7 @@ import Button from "../Reusable/Button";
 import { AnimatePresence, motion } from "framer-motion";
 import { icons } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
+import { deleteBoard, getBoards, getSelectedBoard, saveToLocalStorage, selectBoard } from "../../redux/slice";
 import DeleteModal from "../Modals/DeleteModal";
 import ModalAnimate from "../Modals/ModalAnimate";
 
@@ -20,7 +20,8 @@ interface Props {
 
 const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
   const dispatch = useAppDispatch();
-  const { boards, selectedBoard } = useAppSelector((state) => state.board);
+  const boards = useAppSelector(getBoards);
+  const selectedBoard = useAppSelector(getSelectedBoard);
   const { width } = useWindowSize();
   const [showDialog, setShowDialog] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -89,10 +90,10 @@ const TopBar = ({ theme, showSidebar, setShowSidebar }: Props) => {
                   transition={{ bounce: 0, duration: 0.1 }}
                   className="dialog-box"
                 >
-                  <Button handleClick={handleEditClick} type="text" className={"text-gray-gray font-bold hover:text-gray-600 hover:bg-gray-400"}>
+                  <Button handleClick={handleEditClick} type="text" className={"text-gray-gray font-bold hover:bg-gray-400 hover:text-gray-600"}>
                     Edit Board
                   </Button>
-                  <Button handleClick={handleDelete} type="text" className={"text-red-400 font-bold hover:text-red-600 hover:bg-red-300"}>
+                  <Button handleClick={handleDelete} type="text" className={"font-bold text-red-400 hover:bg-red-300 hover:text-red-600"}>
                     Delete Board
                   </Button>
                 </motion.div>
